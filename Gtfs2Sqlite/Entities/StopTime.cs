@@ -17,7 +17,7 @@ namespace Gtfs2Sqlite.Entities
 		public string arrival_time { get; set; }
 		public string stop_id { get; set; }
 		//making an assumption that a trip will have < 512 stops, saves lots of space.
-		public byte stop_sequence { get; set; }
+		public short stop_sequence { get; set; }
 
 
 		//optional

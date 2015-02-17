@@ -16,6 +16,7 @@ using System.Reflection;
 
 namespace Gtfs2Sqlite
 {
+
 	public class GTFSProcessor
 	{
 		private Dictionary<string, Action<String, Stream>> _readers;
@@ -32,7 +33,7 @@ namespace Gtfs2Sqlite
 			{"calendar_dates.txt",Process<CalendarDate>},
 			{"fare_attributes.txt",Process<FareAttribute>},
 			{"fare_rules.txt",Process<FareRule>},
-			{"shapes.txt",ProcessShape},
+			{"shapes.txt",Process<Shape>},
 			{"frequencies.txt",Process<Frequency>},
 			{"transfers.txt",Process<Transfer>},
 			{"feed_info.txt",Process<FeedInfo>}
@@ -71,18 +72,21 @@ namespace Gtfs2Sqlite
 
 		private void Process<T> (string connection, Stream stream) where T:class, new()
 		{
-			var objs = new CsvContext ().Read<T> (new StreamReader (stream)).ToArray ();
+            var objs = new CsvContext ().Read<T> (new StreamReader (stream)).ToArray ();
 			Process (connection, objs);
 		}
 
-		///<summary>
+         ///<summary>
 		/// Packs the shape into a smaller hunk (coordinates are stored in binary)
 		///</summary>
 		private void ProcessShape (string connection, Stream stream)
 		{
+            
 			var objs = new CsvContext ().Read<ShapePoint> (new StreamReader (stream)).ToArray ();
-			var saveObjects = objs.ToLookup (k => k.shape_id)
-				.Select (shapeGroup => new Shape{
+			
+            var saveObjects = objs.ToLookup (k => k.shape_id)
+				.Select (shapeGroup => new ShapeCompressed{
+                        shape_id = shapeGroup.Key,
 						Coordinates = shapeGroup
 							.OrderBy(l=>l.shape_pt_sequence)
 							.SelectMany(shape=> BitConverter.GetBytes(shape.shape_pt_lat)

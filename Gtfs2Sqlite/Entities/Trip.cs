@@ -17,7 +17,7 @@ namespace Gtfs2Sqlite.Entities
 		public string trip_short_name{ get; set; }
 		public string direction_id{ get; set; }
 		public string block_id{ get; set; }
-		public string shape_id{ get; set; }
+		public int shape_id{ get; set; }
 		public string wheelchair_accessible{ get; set; }
 	}
 }
