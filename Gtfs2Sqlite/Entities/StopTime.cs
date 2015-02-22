@@ -16,8 +16,8 @@ namespace Gtfs2Sqlite.Entities
 		//See this for details: https://developers.google.com/transit/gtfs/reference#stop_times_fields
 		public string arrival_time { get; set; }
 		public string stop_id { get; set; }
-		//making an assumption that a trip will have < 512 stops, saves lots of space.
-		public short stop_sequence { get; set; }
+		
+        public short stop_sequence { get; set; }
 
 
 		//optional
@@ -26,6 +26,7 @@ namespace Gtfs2Sqlite.Entities
 		public PickupDropoffType? pickup_type { get; set; }
 		public PickupDropoffType? drop_off_type { get; set; }
 		public float? shape_dist_traveled { get; set; }
+        
 	}
 }
 
