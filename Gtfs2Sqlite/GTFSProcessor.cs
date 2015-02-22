@@ -7,6 +7,7 @@ using Ionic;
 using Ionic.Zip;
 using LINQtoCSV;
 using Mono.Data.Sqlite;
+using ServiceStack;
 using ServiceStack.OrmLite;
 using ServiceStack.Text;
 using Gtfs2Sqlite.Entities;
